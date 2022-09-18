@@ -42,15 +42,10 @@ router.post('/register', async (req, res) => {
 
 
 
-
-
 });
-
-
 
 router.get('/contact', (req, res) => {
     res.send(`Hello World contact page`);
-
 });
 
 router.get('/signin', (req, res) => {
