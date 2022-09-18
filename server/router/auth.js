@@ -12,6 +12,17 @@ router.post('/register',(req,res)=>{
     res.send(`registration page`);
 });
 
+router.get('/contact',(req,res)=>{
+    res.send(`Hello World contact page`);
+
+});
+
+router.get('/signin',(req,res)=>{
+    res.send(`Hello World sign in page`);
+
+});
+
+
 
 module.exports= router;
 
