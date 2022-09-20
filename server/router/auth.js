@@ -1,5 +1,5 @@
 const express = require('express');
-
+const bcrypt = require('bcryptjs');
 const router = express.Router();
 require('../db/conn');
 const User = require('../model/userSchema');
@@ -8,11 +8,12 @@ const User = require('../model/userSchema');
 router.get('/', (req, res) => {
     res.send(`Hello World from the server router`);
 
+
 });
 
 
-
 // registration using async await 
+
 
 router.post('/register', async (req, res) => {
 
@@ -29,18 +30,47 @@ router.post('/register', async (req, res) => {
         } else {
             let new_user = new User({ name, email, phone, password, cpassword, work, address });
             const registerRecord = await new_user.save();
-            
-                res.status(200).json({ message: "user created successfully" });
-          
+
+            res.status(200).json({ message: "user created successfully" });
+
         }
 
     } catch (error) {
-        res.status(422).json({ error: "Something went wrong" });
+        res.status(422).json({ error: error });
     }
 
 
 
+});
 
+
+router.post('/login', async (req, res) => {
+console.log(req.body);
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            res.status(400).json({ error: "Please filled the field propeerly" });
+        }
+        const userData = await User.findOne({ email: email });
+
+        if (userData) {
+            const cmp = await bcrypt.compare(password, userData.password);
+            if (cmp) {
+                res.status(200).json({ message: "user Loged In successfully" });
+            }else{
+                res.status(400).json({ error: "Wrong username or password" });
+            }
+          
+        }else{
+            res.status(400).json({ error: "user error" });
+        }
+
+    
+
+    } catch (error) {
+
+    }
 
 });
 
