@@ -16,33 +16,6 @@ app.use(require('./router/auth'));
  }
 
 
-app.get('/',(req,res)=>{
-    res.send(`Hello World from the server`);
-
-});
-
-app.get('/about',middleware,(req,res)=>{
-    res.send(`Hello World about page`);
-
-});
-
-app.get('/contact',(req,res)=>{
-    res.send(`Hello World contact page`);
-
-});
-
-app.get('/signin',(req,res)=>{
-    res.send(`Hello World sign in page`);
-
-});
-
-app.get('/signup',(req,res)=>{
-    res.send(`Hello World signup page`);
-
-});
-
-
-
 app.listen(PORT,()=>{
     console.log(`server is running on port number ${PORT}`);
 });
