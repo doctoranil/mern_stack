@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt= require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const router = express.Router();
 require('../db/conn');
@@ -56,6 +57,12 @@ console.log(req.body);
 
         if (userData) {
             const cmp = await bcrypt.compare(password, userData.password);
+
+            const token= await userData.generateAuthToken();
+            res.cookie("jwtoken",token,{
+               expires:new Date(Date.now()+2892000000),
+               httpOnly:true
+            });
             if (cmp) {
                 res.status(200).json({ message: "user Loged In successfully" });
             }else{
@@ -69,7 +76,7 @@ console.log(req.body);
     
 
     } catch (error) {
-
+console.log(error);
     }
 
 });
